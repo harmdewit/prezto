@@ -11,3 +11,24 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+
+# Lunchy autocomplete
+# LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
+# if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
+#   . $LUNCHY_DIR/lunchy-completion.zsh
+# fi
+
+alias "be"="bundle exec"
+
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+
+alias docker-start="docker-compose -f ~/dev/slicing/docker-compose.yml start -d"
+alias docker-stop="docker-compose -f ~/dev/slicing/docker-compose.yml stop"
+alias docker-pause="docker pause $(docker ps -q)"
+alias docker-unpause="docker unpause $(docker ps -q)"
+alias docker-time="docker run --privileged alpine hwclock -s"
+alias docker-c="docker-compose -f ~/dev/slicing/docker-compose.yml"
