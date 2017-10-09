@@ -26,9 +26,28 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 
-alias docker-start="docker-compose -f ~/dev/slicing/docker-compose.yml start -d"
-alias docker-stop="docker-compose -f ~/dev/slicing/docker-compose.yml stop"
-alias docker-pause="docker pause $(docker ps -q)"
-alias docker-unpause="docker unpause $(docker ps -q)"
+alias docker-start="docker-compose -f ~/code/nedap/slicing/docker-compose.yml start -d"
+alias docker-stop="docker-compose -f ~/code/nedap/slicing/docker-compose.yml stop"
 alias docker-time="docker run --privileged alpine hwclock -s"
-alias docker-c="docker-compose -f ~/dev/slicing/docker-compose.yml"
+alias docker-c="docker-compose -f ~/code/nedap/slicing/docker-compose.yml"
+# alias docker-pause="docker pause $(docker ps -q)"
+# alias docker-unpause="docker unpause $(docker ps -q)"
+# alias docker-stop-exited="docker rm -v $(docker ps -a -q -f status=exited)"
+# alias docker-remove-idle="docker rmi $(docker images -f dangling=true -q)"
+
+alias hackermode="csshx nl12s0040 nl14s0020 nl12s0058 nl14s0031 nl12s0117 nl12s0118 nl14s0084 nl14s0085"
+
+alias start-onsadministratie="cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
+alias start-cupido="cd $HOME/code/nedap/cupido && ./start.sh"
+# alias java7="export JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
+# alias java8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
+
+alias git-delete-merged="git branch --merged master | grep -v master | xargs -n 1 git branch -d"
+
+setopt interactivecomments
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(jenv init -)"

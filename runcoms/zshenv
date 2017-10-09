@@ -10,10 +10,30 @@ if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+# Customize to your needs...
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+
+
+# Add sublime to path
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
+# Add jenv to path
+export PATH="$HOME/.jenv/bin:$PATH"
+
+# export PATH="/usr/local/opt/qt@5.5/bin:$PATH"
 export EDITOR='subl -w'
 export BUNDLER_EDITOR="subl"
 
 # export CUPIDO_HOST="cupido.dev"
 export CAP_USER="harm.dewit"
+export CAP_KEY_PATH="~/.ssh/id_rsa"
+
+# Install Ons Administration on macOS: https://confluence.ioservice.net/display/OA/Ons+Administratie+Installation+guide
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JBOSS_HOME="$HOME/Documents/Nedap/jboss-eap-6.2"
+export MYSQL_HOME="/usr/local/opt/mysql@5.6"
+export IOSERVER_HOME="$HOME/code/nedap/ioserver"
+export PATH="MYSQL_HOME/bin:$PATH"
+export CHANGELOG_GITHUB_TOKEN="ee1dcce3ea9b564674b7c0e6928c27f3d3f72b11"
