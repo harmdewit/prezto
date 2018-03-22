@@ -21,6 +21,7 @@ source /usr/local/share/chruby/auto.sh
 # fi
 
 alias "be"="bundle exec"
+alias "rspec"="bin/rspec"
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
@@ -29,27 +30,59 @@ alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias docker-start="docker-compose -f ~/code/nedap/slicing/docker-compose.yml start -d"
 alias docker-stop="docker-compose -f ~/code/nedap/slicing/docker-compose.yml stop"
 alias docker-time="docker run --privileged alpine hwclock -s"
-alias docker-c="docker-compose -f ~/code/nedap/slicing/docker-compose.yml"
+alias docker-c="DOCKER_CONTAINER_HOST=docker.for.mac.host.internal DOCKER_CONTAINER_HOST_IP=192.168.65.2 docker-compose -f ~/code/nedap/slicing/docker-compose.yml"
 # alias docker-pause="docker pause $(docker ps -q)"
 # alias docker-unpause="docker unpause $(docker ps -q)"
 # alias docker-stop-exited="docker rm -v $(docker ps -a -q -f status=exited)"
 # alias docker-remove-idle="docker rmi $(docker images -f dangling=true -q)"
 
-alias hackermode="csshx nl12s0040 nl14s0020 nl12s0058 nl14s0031 nl12s0117 nl12s0118 nl14s0084 nl14s0085"
+# List active containers
+# docker ps -a
+# docker stop $(docker ps -a -q)
+# docker rm $(docker ps -a -q)
+
+# remove images none
+# docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
+
+alias hackermode="csshx nl12s0117 nl12s0118 nl14s0084 nl14s0085 nl12s0144 nl14s0111 nl14s0120 nl12s0159"
 
 # alias start-onsadministratie="cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
 # alias start-cupido="cd $HOME/code/nedap/cupido && ./start.sh"
 alias java7="export JAVA_HOME=`/usr/libexec/java_home -v 1.7`"
 alias java8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`"
-alias start-cupido="java7 && $HOME/code/nedap/cupido/start.sh"
-alias start-onsadministratie="java8 && cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
+
+alias start-cupido="java7 && cd $HOME/code/nedap/cupido && ./start.sh"
+
+# alias clean-ioserver="java7 && cd ${IOSERVER_HOME} && mvn clean install -DskipTests -DjbossVersion=7 -DskipYui -Pit-profile-jboss7 -Pjrebel -T 1C"
+# alias clean-ioserver-jboss="java7 && cd ${IOSERVER_HOME}/setup/jboss7 && mvn clean install -DjbossVersion=7"
+# alias quickstart-ioserver="java7 && cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
+# alias start-ioserver="clean-ioserver && clean-ioserver-jboss && quickstart-ioserver"
+
+# https://confluence.ioservice.net/display/OA/JBoss+7+on+your+local+machine
+alias ioinitdb="java8 && cd ${IOSERVER_HOME}/setup/build-db && mvn initialize db:create"
+alias iobuildit7="java8 && cd ${IOSERVER_HOME} && mvn clean install -DskipTests -DjbossVersion=7 -DskipYui -Pit-profile-jboss7 -Pjrebel"
+alias iocleanjboss7="java8 && cd ${IOSERVER_HOME}/setup/jboss7 && mvn clean install -DjbossVersion=7"
+alias iostart7="java8 && iocleanjboss7 && cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
+alias iocleanstartjboss7="java8 && export JBOSS_HOME=${JBOSS_HOME} && cd ${IOSERVER_HOME} && iobuildit7 && iostart7"
+
+
+
+
 
 alias git-delete-merged="git branch --merged master | grep -v master | xargs -n 1 git branch -d"
+# https://stackoverflow.com/questions/17983068/delete-local-git-branches-after-deleting-them-on-the-remote-repo/28020809#28020809
+alias git-sync="git fetch --all -p; git branch -vv | grep \": gone]\" | awk '{ print $1 }'"
+
 
 setopt interactivecomments
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # eval "$(jenv init -)"
+export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
