@@ -30,21 +30,23 @@ alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias docker-start="docker-compose -f ~/code/nedap/slicing/docker-compose.yml start -d"
 alias docker-stop="docker-compose -f ~/code/nedap/slicing/docker-compose.yml stop"
 alias docker-time="docker run --privileged alpine hwclock -s"
-alias docker-c="DOCKER_CONTAINER_HOST=docker.for.mac.host.internal DOCKER_CONTAINER_HOST_IP=192.168.65.2 docker-compose -f ~/code/nedap/slicing/docker-compose.yml"
+alias docker-c="docker-compose -f ~/code/nedap/slicing/docker-compose.yml"
 # alias docker-pause="docker pause $(docker ps -q)"
 # alias docker-unpause="docker unpause $(docker ps -q)"
-# alias docker-stop-exited="docker rm -v $(docker ps -a -q -f status=exited)"
+alias docker-rm-exited='docker rm -v $(docker ps -a -q -f status=exited)'
 # alias docker-remove-idle="docker rmi $(docker images -f dangling=true -q)"
+# remove images none
+alias docker-rmi-untagged='docker rmi $(docker images | grep "^<none>" | awk ''{print $3}'')'
 
 # List active containers
 # docker ps -a
 # docker stop $(docker ps -a -q)
 # docker rm $(docker ps -a -q)
 
-# remove images none
-# docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
+
 
 alias hackermode="csshx nl12s0117 nl12s0118 nl14s0084 nl14s0085 nl12s0144 nl14s0111 nl14s0120 nl12s0159"
+alias slicehacker="csshx nl12s0066 nl12s0130 nl14s0041 nl14s0096 nl12s0186 nl12s0188"
 
 # alias start-onsadministratie="cd ${IOSERVER_HOME}/setup/startup7 && mvn install -Pdebug -DjbossVersion=7"
 # alias start-cupido="cd $HOME/code/nedap/cupido && ./start.sh"
@@ -66,8 +68,7 @@ alias iostart7="java8 && iocleanjboss7 && cd ${IOSERVER_HOME}/setup/startup7 && 
 alias iocleanstartjboss7="java8 && export JBOSS_HOME=${JBOSS_HOME} && cd ${IOSERVER_HOME} && iobuildit7 && iostart7"
 
 
-
-
+alias hivemind="overmind s"
 
 alias git-delete-merged="git branch --merged master | grep -v master | xargs -n 1 git branch -d"
 # https://stackoverflow.com/questions/17983068/delete-local-git-branches-after-deleting-them-on-the-remote-repo/28020809#28020809
